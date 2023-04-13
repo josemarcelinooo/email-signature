@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Email Signature Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="cropperjs-main/dist/cropper.css">
+
+        <script>
+
+          window.addEventListener("pageshow", () => {
+            document.getElementById("file-upload").value = "";
+          });
+          
+          function closebtn() {
+            document.getElementById("file-upload").value = "";
+          }
+            function checkFile(input) {
+              // Get the selected file
+              var file = input.files[0];
+              
+              // Check if it's an image file
+              if (!file.type.match('image.*')) {
+                alert("Please select an image file.");
+                return false;
+              }
+              
+              // Check if it meets size or dimension requirements
+              if (file.size > 1024 * 1024) {
+                alert("Please select an image that's smaller than 1MB.");
+                return false;
+              }
+              
+              // Display a preview of the selected image
+              var reader = new FileReader();
+              reader.onload = function(event) {
+                var img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                  var width = img.width;
+                  var height = img.height;
+                  if (width <= 200 && height <= 200) {
+                    // Proceed with the upload
+                    // alert("Selected file meets the requirements. Proceeding with the upload.");
+                    return true;
+
+                  } else {
+                    alert("Image must be below 200x200 pixels.");
+                    document.getElementById("file-upload").value = "";
+                    return false;
+
+                  }
+                };
+              };
+              reader.readAsDataURL(file);
+            }
+          </script>
+    </head>
+    <body id="page-top">
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold title-section">Clark Outsourcing Signature Template</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="container px-4 px-lg-5">
+
+                        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                            <div class="col-lg-6">
+
+                                <form action="post/" method="post" id="contactForm"  enctype="multipart/form-data">
+                                    <!-- Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="fname" type="text" name="fname" placeholder="Enter your name..." maxlength="25" required/>
+                                        <label for="name">Full name</label>
+                                        <div id="emailHelp" class="form-text" style="color:white;">Full name must not exceed 25 characters including spaces</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="position" type="text" name="position" placeholder="Enter your position..." required/>
+                                        <label for="name">Work Position</label>
+                                    </div>
+                                     <!-- Phone number input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="phone" type="tel" name="phone" placeholder="(123) 456-7890" required/>
+                                        <label for="name">Phone Number</label>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" required />
+                                        <label for="name">Email Address</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="skypeid" type="text" name="skypeid" placeholder="Enter your Skype ID..." required/>
+                                        <label for="name">Skype Id</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control form-control-sm" id="file-upload" type="file" name="uploadedFile2" required/>
+                                        <!-- Add the hidden input element to store the cropped image -->
+                                        <input type="hidden" id="croppedImage" name="croppedImage">
+                                        <div id="emailHelp" class="form-text" style="color:white;">Image must be in <span style="color:yellow">JPG</span> or <span style="color:yellow">PNG</span> format</div>
+                                    </div>
+      
+
+
+                                    <div class="d-grid"><button class="btn btn-primary"  name="uploadBtn" value="Upload" type="submit">Submit</button></div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Modal -->
+          <div class="modal fade" id="imageCropperModal" tabindex="-1" aria-labelledby="imageCropperModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="imageCropperModalLabel">Crop Your Image</h5>
+                  <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close" onclick="closebtn()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="img-container">
+                    <img id="image" src="#" alt="Uploaded image" style="display: none;">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal" onclick="closebtn()" >Close</button>
+                  <button id="cropButton" class="btn btn-primary">Crop Image</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          <script src="cropperjs-main/dist/cropper.js"></script>
+          <script src="script.js"></script>
+    </body>
+</html>
